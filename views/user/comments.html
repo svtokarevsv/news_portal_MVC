@@ -1,0 +1,31 @@
+<div class="row marketing">
+    <h2 class="text-muted">Пользователь &mdash;<?=$data['comments'][0]['name'] ?></h2>
+
+    <div>
+        <hr>
+        <h3>Комментарии:</h3>
+        <?php foreach ($data['comments'] as $comment) {?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Новость - <a href="<?=PRELINK ?>news/article/<?=self::NormalizeStringToLatin( $comment['title'])?>-<?=$comment['id_news'] ?>"><?=$comment['title'] ?></a> <span class="pull-right small"><?=date("H:i d-m-Y",strtotime($comment['date'])) ?></span></h3>
+                </div>
+                <div class="panel-body">
+                    <p><?=$comment['comment'] ?></p>
+                    <form method="post">
+                        <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                        <div class="col-xs-2 col-xs-offset-8">
+                            <button type="submit" name="like" value="1"><i class="fa fa-thumbs-o-up" aria-hidden="true">&nbsp;</i>
+                            </button>
+                            Like <?= $comment['likes'] ?></div>
+                        <div class="col-xs-2">
+                            <button type="submit" name="dislike" value="1"><i class="fa fa-thumbs-o-down" aria-hidden="true">
+                                    &nbsp;</i></button>
+                            Dislike <?= $comment['dislikes'] ?></div>
+                    </form>
+                </div>
+            </div>
+            <?php
+        } ?>
+    </div>
+    <nav class="text-center"><?php empty($data['comments'])? print "<h2>У этого человека нет комментариев</h2>" :$data['pagination']->showPagination();?></nav>
+</div>

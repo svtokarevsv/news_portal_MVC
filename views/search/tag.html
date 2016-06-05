@@ -1,0 +1,16 @@
+<div class="row marketing">
+    <h2 class="text-muted">Результаты поиска по тэгу : <?=$data['tag'] ?></h2>
+
+    <div>
+        <hr>
+        <h3>Новости:</h3>
+        <ul class="list-group">
+            <?php $i=!empty($_GET['page'])?1+5*((int)$_GET['page']-1):1;
+            foreach ($data['news'] as $item) {?>
+                <li class="list-group-item"><a href="<?=PRELINK ?>news/article/<?=self::NormalizeStringToLatin( $item['title'])?>-<?=$item['id'] ?>"><?=$i++,". ",$item['title'] ?></a><span class="pull-right">Раздел &raquo;<?=$item['category'] ?></span></li>
+                <?php
+            } ?>
+        </ul>
+    </div>
+    <nav class="text-center"><?php empty($data['news'])? print "<h2>По данному тэгу нет новостей</h2>" :$data['pagination']->showPagination();?></nav>
+</div>

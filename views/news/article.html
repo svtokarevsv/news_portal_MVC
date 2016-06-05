@@ -1,0 +1,59 @@
+<ol class="breadcrumb">
+    <li><a href="<?= PRELINK ?>">Главная</a></li>
+    <li>
+        <a href="<?= PRELINK ?>news/category/<?= self::NormalizeStringToLatin($data['article'][0]['category']) ?>-<?= $data['article'][0]['section_id'] ?>">
+            &nbsp;<?= $data['article'][0]['category'] ?></a></li>
+    <li class="active"><?= $data['article'][0]['title'] ?></li>
+</ol>
+<div class="row marketing">
+    <h1><?= $data['article'][0]['title'] ?></h1>
+    <hr>
+    <section>
+        <img src="<?= PRELINK ?>uploads/<?= $data['article'][0]['image'] ?>" class="pull-right img-article">
+        <div class="center-block meta">
+            <div class="pull-left"><i class="fa fa-eye" aria-hidden="true"></i> &nbsp;Читают
+                сейчас: <?= $data['current_views'] ?></div>
+            <div class="margin-left200"><span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;</span>Всего
+                прочитало: <?= $data['article'][0]['views'] ?></div>
+        </div>
+        <p><?= $data['article'][0]['text'] ?></p>
+    </section>
+    <div class="clearfix"></div>
+    <section class="well well-sm col-sm-8 margin-top15">
+        <h4>Теги: <?php foreach ($data['article'] as $key => $item) { ?>
+                <a
+                href="<?= PRELINK ?>search/tag/<?= $item['tag'] ?>"><?= $item['tag'] ?></a><?php if (end(array_keys($data['article'])) != $key) echo "," ?>
+                <?php
+            } ?></h4>
+    </section>
+    <div class="clearfix"></div>
+    <div>
+        <hr>
+        <h3>Комментарии:</h3>
+        <?php foreach ($data['comments'] as $comment) { ?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><a
+                            href="<?= PRELINK ?>user/comments/<?= $comment['user_id'] ?>"><?= $comment['name'] ?></a>
+                        <span class="pull-right small"><?= date("H:i d-m-Y", strtotime($comment['date'])) ?></span></h3>
+                </div>
+                <div class="panel-body">
+                    <p><?= $comment['comment'] ?></p>
+                    <form method="post">
+                        <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                        <div class="col-xs-2 col-xs-offset-8">
+                            <button type="submit" name="like" value="1"><i class="fa fa-thumbs-o-up" aria-hidden="true">&nbsp;</i>
+                            </button>
+                            Like <?= $comment['likes'] ?></div>
+                        <div class="col-xs-2">
+                            <button type="submit" name="dislike" value="1"><i class="fa fa-thumbs-o-down" aria-hidden="true">
+                                    &nbsp;</i></button>
+                            Dislike <?= $comment['dislikes'] ?></div>
+                    </form>
+                </div>
+            </div>
+            <?php
+        } ?>
+    </div>
+    <hr>
+</div>

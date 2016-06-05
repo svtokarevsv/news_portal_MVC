@@ -1,0 +1,14 @@
+<div class="row marketing">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="text-muted">Раздел &raquo; <?=$data['category'][0]['category'] ?></h2></div>
+
+        <ul class="list-group">
+            <?php $i=!empty($_GET['page'])?1+5*((int)$_GET['page']-1):1;
+            foreach ($data['category'] as $item) {?>
+                <li class="list-group-item"><a href="<?=PRELINK ?>news/article/<?=self::NormalizeStringToLatin( $item['title'])?>-<?=$item['id'] ?>"><?=$i++,". ",$item['title'] ?></a></li>
+                <?php
+            } ?>
+        </ul>
+    </div>
+    <nav class="text-center"><?php empty($data['category'])? print "<h2>По вашему запросу нет объявлений</h2>" :$data['pagination']->showPagination();?></nav>
+</div>

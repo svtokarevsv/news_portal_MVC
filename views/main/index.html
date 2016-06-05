@@ -1,0 +1,80 @@
+<h2 class="text-muted">Свежие новости со всего мира!</h2>
+
+<section class="col-sm-12">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+        <?php $i=0;foreach ($data['slider'] as $item) {?>
+            <div class="item <?php if($i==0) echo "active";$i=1;?>">
+                <img src="<?=PRELINK ?>uploads/<?=$item['image']; ?>" alt="..." class="carousel-height">
+                <div class="carousel-caption">
+                    <h3><?=$item['title']; ?></h3>
+                </div>
+            </div>
+        <?php
+        } ?>
+
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</section>
+
+<div class="clearfix"></div>
+<div class="row marketing">
+    <section class="meta">
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading"><a>Топ-5 обсуждаемые новости</a></div>
+
+                <ul class="list-group">
+                    <?php $i=1;foreach ($data['top-news'] as $item) {?>
+                        <li class="list-group-item"><a href="<?=PRELINK ?>news/article/<?=self::NormalizeStringToLatin( $item['title'])?>-<?=$item['id_news'] ?>"><?=$i++,". ",$item['title'] ?></a></li>
+                        <?php
+                    } ?>
+                   
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><a>Топ-5 комментаторов</a></div>
+
+                <ul class="list-group">
+                    <?php $i=1;foreach ($data['top-commentator'] as $item) {?>
+                        <li class="list-group-item"><a href="<?=PRELINK ?>user/comments/<?=$item['id_user']?>"><?=$i++,". ",$item['name'] ?></a></li>
+                        <?php
+                    } ?>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <?php $i=1;foreach ($data['all-news'] as $item) {?>
+    <div class="col-sm-12">
+        <h3><a href="<?=PRELINK ?>news/category/<?=self::NormalizeStringToLatin( $item[0]['category'] )?>-<?=$item[0]['id'] ?>">&nbsp;<?=$item[0]['category'] ?></a></h3>
+        <ul class="list-group">
+        <?php $i=1;foreach ($item as $article) {?>
+            <li class="list-group-item"><a href="<?=PRELINK ?>news/article/<?=self::NormalizeStringToLatin( $article['title'])?>-<?=$article['news_id'] ?>"><?=$i++,". ",$article['title'] ?></a></li>
+            <?php
+        } ?>
+        </ul>
+    </div>
+        <?php
+    } ?>
+</div>

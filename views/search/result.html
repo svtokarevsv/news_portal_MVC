@@ -1,0 +1,80 @@
+<div class="row marketing">
+    <h2 class="text-muted">Расширенный поиск</h2>
+
+    <form class="form-inline" method="get">
+        <div class="row">
+            <label class="control-label col-sm-1" for="list-search">Что ищем?</label>
+
+            <div class="form-group input-group col-sm-4">
+                <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" id="list-search" placeholder="Поиск..." name="search">
+            </div>
+
+            <div class="form-group input-group col-sm-3">
+
+                <span class="input-group-addon"><i class="fa fa-tags" aria-hidden="true"></i></span>
+                <select name="tags" class="form-control" >
+                    <option></option>
+                    <?php foreach ($data['tags'] as $tag) {
+                        echo "<option value='{$tag['id']}'>{$tag['tag']}</option>";
+                    }
+                    ?>
+                </select>
+
+
+            </div>
+
+            <div class="form-group input-group col-sm-3">
+                <span class="input-group-addon"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
+                <select name="category" class="form-control" >
+                    <option></option>
+                    <?php foreach ($data['categories'] as $category) {
+                        echo "<option value='{$category['id']}'>{$category['title']}</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="description_search"> Искать в названии и описании
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="form-group input-group">
+                    <span class="input-group-addon">От</span>
+                    <input type="date" class="form-control" placeholder="С какой даты..." name="date_from">
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon">До</span>
+                    <input type="date" class="form-control" placeholder="По какую дату..." name="date_to">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="left">
+                    <button type="submit" class="btn btn-lg btn-info" role="button"><i
+                            class="fa fa-search em1_5" aria-hidden="true"> Найти!</i></button>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </form>
+    <div>
+        <hr>
+        <ul class="list-group">
+            <?php $i=!empty($_GET['page'])?1+5*((int)$_GET['page']-1):1;
+            if(!empty($_GET))foreach ($data['result_news'] as $item) {?>
+                <li class="list-group-item"><a href="<?=PRELINK ?>news/article/<?=self::NormalizeStringToLatin( $item['title'])?>-<?=$item['id'] ?>"><?=$i++,". ",$item['title'] ?></a><span class="pull-right">Раздел &raquo;<?=$item['category'] ?></span></li>
+                <?php
+            } ?>
+        </ul>
+    </div>
+    <nav class="text-center"><?php empty($data['result_news'])? print "<h2>По данному запросу нет новостей</h2>" :$data['pagination']->showPagination();?></nav>
+</div>
